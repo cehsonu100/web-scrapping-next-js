@@ -7,10 +7,62 @@ import { Github, Twitter } from "@/components/shared/icons";
 import WebVitals from "@/components/home/web-vitals";
 import ComponentGrid from "@/components/home/component-grid";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
+import * as Label from '@radix-ui/react-label';
+
+let socket: io();
 
 export default function Home() {
+
+  //usestate to store url and update it
+  const [enteredUrl, setUrl] = useState('');
+  const [pTags, setPTags] = useState<any>([]);
+  const [reload, setReload] = useState(false);
+
+  useEffect(() => {
+    socketInitializer();
+  }, []);
+
+  useEffect(() => {
+    setReload(!reload);
+    console.log("reloaded")
+  }, [pTags])
+  
+  const socketInitializer = async () => {
+    // await fetch('/api/socket');
+    socket = io();
+    socket.on('connect', () => {
+      console.log('connected')
+    })
+    socket.on('scrapping-started', (url: any) => {
+      console.log("scrapping started ", url)
+    })
+    socket.on('p-tags', (msg: any)  => {
+      console.log("All the p tag ", msg)
+      const newPtags = pTags;
+      newPtags.push(msg);
+
+      setPTags(newPtags);
+      console.log("pTags ", pTags);
+    }) 
+  }
+
+
+  const inputChangeHandler = (e: any) => {
+    setUrl(e.target.value)
+  }
+  const keyDownHandler = (e: any) => {
+    if (e.key === 'Enter') {
+      console.log("going to ... ",enteredUrl)
+      socket.emit('input-change', enteredUrl)
+    }
+  }
+  
+   
+
   return (
-    <Layout>
+    <>
       <motion.div
         className="max-w-xl px-5 xl:px-0"
         initial="hidden"
@@ -26,90 +78,53 @@ export default function Home() {
           },
         }}
       >
-        <motion.a
-          variants={FADE_DOWN_ANIMATION_VARIANTS}
-          href="https://twitter.com/steventey/status/1613928948915920896"
-          target="_blank"
-          rel="noreferrer"
-          className="mx-auto mb-5 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full bg-blue-100 px-7 py-2 transition-colors hover:bg-blue-200"
-        >
-          <Twitter className="h-5 w-5 text-[#1d9bf0]" />
-          <p className="text-sm font-semibold text-[#1d9bf0]">
-            Introducing Precedent
-          </p>
-        </motion.a>
         <motion.h1
           className="bg-gradient-to-br from-black to-stone-500 bg-clip-text text-center font-display text-4xl font-bold tracking-[-0.02em] text-transparent drop-shadow-sm md:text-7xl md:leading-[5rem]"
           variants={FADE_DOWN_ANIMATION_VARIANTS}
         >
-          <Balancer>Building blocks for your Next project</Balancer>
+          <Balancer><input onKeyDown={keyDownHandler} onChange={inputChangeHandler} className="min-w-fit rounded-md text-black" type={"text"} placeholder="Enter the URL..." /></Balancer>
         </motion.h1>
-        <motion.p
-          className="mt-6 text-center text-gray-500 md:text-xl"
-          variants={FADE_DOWN_ANIMATION_VARIANTS}
-        >
-          <Balancer>
-            An opinionated collection of components, hooks, and utilities for
-            your Next.js project.
-          </Balancer>
-        </motion.p>
-        <motion.div
-          className="mx-auto mt-6 flex items-center justify-center space-x-5"
-          variants={FADE_DOWN_ANIMATION_VARIANTS}
-        >
-          <a
-            className="group flex max-w-fit items-center justify-center space-x-2 rounded-full border border-black bg-black px-5 py-2 text-sm text-white transition-colors hover:bg-white hover:text-black"
-            href={DEPLOY_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <svg
-              className="h-4 w-4 group-hover:text-black"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 4L20 20H4L12 4Z"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <p>Deploy to Vercel</p>
-          </a>
-          <a
-            className="flex max-w-fit items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm text-gray-600 shadow-md transition-colors hover:border-gray-800"
-            href="https://github.com/steven-tey/precedent"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Github />
-            <p>Star on GitHub</p>
-          </a>
-        </motion.div>
       </motion.div>
       {/* here we are animating with Tailwind instead of Framer Motion because Framer Motion messes up the z-index for child components */}
-      <div className="my-10 grid w-full max-w-screen-xl animate-[slide-down-fade_0.5s_ease-in-out] grid-cols-1 gap-5 px-5 md:grid-cols-3 xl:px-0">
-        {features.map(({ title, description, demo, large }) => (
-          <Card
-            key={title}
-            title={title}
-            description={description}
-            demo={
-              title === "Beautiful, reusable components" ? (
-                <ComponentGrid />
-              ) : (
-                demo
-              )
-            }
-            large={large}
-          />
-        ))}
-      </div>
-    </Layout>
+      {/* <div className="my-10 grid w-full max-w-screen-xl animate-[slide-down-fade_0.5s_ease-in-out] grid-cols-1 gap-5 px-5 md:grid-cols-3 xl:px-0"> */}
+        <ul className="text-black">
+          <li>Hiii</li>
+          <li>Hiii</li>
+          <li></li>
+          {pTags.length > 0 && <li>{pTags[0].data[0]}</li>}
+        </ul>
+        <ul>
+          {pTags.map(function (para: any) {
+            return (
+              // <Card
+              //   key={para.link}
+              //   title={para.link}
+              //   description={para.link}
+              //   demo={
+              //     sentences(para.data) 
+              //     // <p>{"hi"}</p>         
+              //   }
+              //   // large={large}
+              // />
+              <li key={para.link}>{para.link}</li>
+            )
+            })
+          }
+        </ul>
+        
+
+      {/* </div> */}
+
+    </>
   );
+}
+
+const sentences = (dataArray: any) => {
+  let sentences: JSX.Element[] = [];
+  dataArray.forEach((data: any) => {
+    sentences.push(<p>data</p>);
+  })
+  return sentences;
 }
 
 const features = [

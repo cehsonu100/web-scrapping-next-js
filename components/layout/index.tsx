@@ -45,9 +45,9 @@ export default function Layout({
               height="30"
               className="mr-2 rounded-sm"
             ></Image>
-            <p>Precedent</p>
+            <p>Web Scraper</p>
           </Link>
-          <div>
+          {/* <div>
             <AnimatePresence>
               {!session && status !== "loading" ? (
                 <motion.button
@@ -61,22 +61,22 @@ export default function Layout({
                 <UserDropdown />
               )}
             </AnimatePresence>
-          </div>
+          </div> */}
         </div>
       </div>
-      <main className="flex w-full flex-col items-center justify-center py-32">
+      <main className="flex w-full flex-col items-center justify-center py-10">
         {children}
       </main>
       <div className="absolute w-full border-t border-gray-200 bg-white py-5 text-center">
         <p className="text-gray-500">
-          A free template by{" "}
+          {" "}
           <a
             className="font-medium text-gray-800 underline transition-colors"
-            href="https://twitter.com/steventey"
+            href="http://yanatalk.com/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Steven Tey
+            Yana
           </a>
         </p>
       </div>
