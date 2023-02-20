@@ -548,6 +548,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-modal@^3.13.1":
+  version "3.13.1"
+  resolved "https://registry.npmjs.org/@types/react-modal/-/react-modal-3.13.1.tgz"
+  integrity sha512-iY/gPvTDIy6Z+37l+ibmrY+GTV4KQTHcCyR5FIytm182RQS69G5ps4PH2FxtC7bAQ2QRHXMevsBgck7IQruHNg==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@^16.8.0 || ^17.0.0 || ^18.0.0", "@types/react@^16.9.0 || ^17.0.0 || ^18.0.0", "@types/react@>=16", "@types/react@18.0.26":
   version "18.0.26"
   resolved "https://registry.npmjs.org/@types/react/-/react-18.0.26.tgz"
@@ -1635,6 +1642,11 @@ event-target-shim@^5.0.0:
   version "5.0.1"
   resolved "https://registry.npmjs.org/event-target-shim/-/event-target-shim-5.0.1.tgz"
   integrity sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==
+
+exenv@^1.2.0:
+  version "1.2.2"
+  resolved "https://registry.npmjs.org/exenv/-/exenv-1.2.2.tgz"
+  integrity sha512-Z+ktTxTwv9ILfgKCk32OX3n/doe+OcLTRtqK9pcL+JsP3J1/VW8Uvl4ZjLlKqeW4rzK4oesDOGMEMRIZqtP4Iw==
 
 extend@^3.0.0:
   version "3.0.2"
@@ -3095,7 +3107,7 @@ prisma@*, prisma@^4.8.1:
   dependencies:
     "@prisma/engines" "4.10.1"
 
-prop-types@^15.0.0, prop-types@^15.8.1:
+prop-types@^15.0.0, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -3129,7 +3141,7 @@ quick-lru@^5.1.1:
   resolved "https://registry.npmjs.org/quick-lru/-/quick-lru-5.1.1.tgz"
   integrity sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==
 
-"react-dom@^16.8 || ^17.0 || ^18.0", "react-dom@^17.0.2 || ^18", react-dom@^18.0.0, react-dom@^18.2.0, react-dom@>=16.3.0, react-dom@>=16.8.0, react-dom@18.2.0:
+"react-dom@^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18", "react-dom@^16.8 || ^17.0 || ^18.0", "react-dom@^17.0.2 || ^18", react-dom@^18.0.0, react-dom@^18.2.0, react-dom@>=16.3.0, react-dom@>=16.8.0, react-dom@18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
   integrity sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==
@@ -3146,6 +3158,11 @@ react-is@^18.0.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
+
+react-lifecycles-compat@^3.0.0:
+  version "3.0.4"
+  resolved "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz"
+  integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
 react-markdown@^8.0.4:
   version "8.0.5"
@@ -3167,6 +3184,16 @@ react-markdown@^8.0.4:
     unified "^10.0.0"
     unist-util-visit "^4.0.0"
     vfile "^5.0.0"
+
+react-modal@^3.16.1:
+  version "3.16.1"
+  resolved "https://registry.npmjs.org/react-modal/-/react-modal-3.16.1.tgz"
+  integrity sha512-VStHgI3BVcGo7OXczvnJN7yT2TWHJPDXZWyI/a0ssFNhGZWsPmB8cF0z33ewDXq4VfYMO1vXgiv/g8Nj9NDyWg==
+  dependencies:
+    exenv "^1.2.0"
+    prop-types "^15.7.2"
+    react-lifecycles-compat "^3.0.0"
+    warning "^4.0.3"
 
 react-remove-scroll-bar@^2.3.3:
   version "2.3.4"
@@ -3201,7 +3228,7 @@ react-wrap-balancer@^0.3.0:
   resolved "https://registry.npmjs.org/react-wrap-balancer/-/react-wrap-balancer-0.3.0.tgz"
   integrity sha512-UlnQvCvSRW0jh8uILic2LJs4tV0KjOO+P70ookE5qRpfZvsKmY8KLcV8s7TBPB6cuVYkoH7+fbqankFrFata8w==
 
-"react@^16.5.1 || ^17.0.0 || ^18.0.0", "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", react@^16.8||^17||^18, "react@^16.9.0 || ^17.0.0 || ^18.0.0", "react@^17.0.2 || ^18", react@^18.0.0, react@^18.2.0, "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", react@>=16, react@>=16.3.0, react@>=16.8.0, react@18.2.0:
+"react@^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18", "react@^16.5.1 || ^17.0.0 || ^18.0.0", "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", react@^16.8||^17||^18, "react@^16.9.0 || ^17.0.0 || ^18.0.0", "react@^17.0.2 || ^18", react@^18.0.0, react@^18.2.0, "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", react@>=16, react@>=16.3.0, react@>=16.8.0, react@18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
@@ -3843,6 +3870,13 @@ vfile@^5.0.0:
     is-buffer "^2.0.0"
     unist-util-stringify-position "^3.0.0"
     vfile-message "^3.0.0"
+
+warning@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.npmjs.org/warning/-/warning-4.0.3.tgz"
+  integrity sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==
+  dependencies:
+    loose-envify "^1.0.0"
 
 web-streams-polyfill@^3.0.3, web-streams-polyfill@>=3.0.1:
   version "3.2.1"

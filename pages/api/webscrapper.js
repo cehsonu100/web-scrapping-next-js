@@ -1,29 +1,46 @@
 import * as cheerio from 'cheerio';
-import { getFullUrl, getHostname } from './helperFunctions';
+import { axiosGet, getFullUrl, getHostname } from './helperFunctions';
 const axios = require('axios');
 const fs = require('fs'); 
 import urlExist from "url-exist"
 
-const visitedLink = [];
+let visitedLink = [];
 let linksQueue;
 
-export async function scrape(url, socket) {
+export async function singleSiteScrape(url, socket) {
+  visitedLink = [];
   console.log("hiiiii");
-  url = 'https://csudh.edu'
+  // url = 'https://csudh.edu'
+  const isValidUrl = await urlExist(url)
+  if(!isValidUrl) return;
+  const response = await axiosGet(url);
+  if(response === null) return;
+  const body = response.data;
+  const $ = cheerio.load(body); 
+  const allPTags = await getPTagsText({href: url});
+  console.log(allPTags);
+  socket.emit('p-tags', {link: url, data: allPTags});
+}
+
+
+export async function fullSiteScrape(url, socket) {
+  visitedLink = [];
+  console.log("hiiiii");
   const isValidUrl = await urlExist(url)
   if(!isValidUrl) {
     return ;
   }
-  const response = await axios.get(url);
+  const response = await axiosGet(url);
+  if(response === null) return;
   const body = response.data; 
   const $ = cheerio.load(body); // Load HTML data and initialize cheerio 
-  linksQueue = getLinks($);
+  linksQueue = getLinks($, url);
   if(linksQueue.length > 0) 
-    await bfsVisit(getHostname(url), linksQueue, socket);
+    await bfsVisit(url, linksQueue, socket);
   // return links;
 }
 
-async function bfsVisit(host, linksQueue, socket) {
+async function bfsVisit(url, linksQueue, socket) {
   while(linksQueue.length > 0) {
     const link = linksQueue.shift();
     console.log("In bfsVisit", link.href)
@@ -41,19 +58,17 @@ async function bfsVisit(host, linksQueue, socket) {
       if(!isValidUrl) 
         continue
       
-      const response = await axios.get(link.href);
+      const response = await axiosGet(link.href);
+      if(response === null) continue;
       const body = response.data; 
       const $ = cheerio.load(body); // Load HTML data and initialize cheerio 
-      linksQueue = linksQueue.concat(getLinks($));
+      linksQueue = linksQueue.concat(getLinks($, url));
     }
 
   }
 }
 
-
-
-
-function getLinks($) {
+function getLinks($, url) {
   const links = $('a');
   const linksData = []
 
@@ -61,7 +76,7 @@ function getLinks($) {
   links.each((index, el) => {
     const data = {
       text: $(el).text(),
-      href: getFullUrl('https://csudh.edu', $(el).attr('href'))
+      href: getFullUrl(url, $(el).attr('href'))
     }
     if(data.href && data.href.length > 0)
       linksData.push(data);
@@ -74,7 +89,8 @@ function getLinks($) {
 async function getPTagsText(link) {
   const isValidUrl = await urlExist(link.href)
   if(!isValidUrl) return [];
-  const response = await axios.get(link.href);
+  const response = await axiosGet(link.href);
+  if(response === null) return;
   const body = response.data;
   const $ = cheerio.load(body); // Load HTML data and initialize cheerio
 
@@ -91,7 +107,7 @@ async function getPTagsText(link) {
 }
 
 
-    
+
 
 
 

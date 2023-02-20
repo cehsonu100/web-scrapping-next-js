@@ -1,9 +1,12 @@
+import axios from "axios";
+
 export function getFullUrl(url, str) {
+  
   const hostname = getHostname(url);
 
   if(!str || str === '' || str.startsWith('#')) return null;
   if (str.startsWith("http") || str.startsWith("https") || str.startsWith("www")) {
-    if(getHostname(str) !== getHostname(url))
+    if(!str.includes(getHostname(url)))
       return null;
     return str;
   } 
@@ -19,10 +22,21 @@ export function getFullUrl(url, str) {
 }
 
 export function getHostname(url) {
-  console.log("host name url", new URL(url).hostname)
   return new URL(url).hostname;
 }
 
 export function getUrlProtocol(url) {
   return new URL(url).protocol;
 }
+
+export async function axiosGet(url) {
+  try {
+    return await axios.get(url);
+  }
+  catch (error) {
+    console.error(error);
+    return null;
+  }
+
+}
+
