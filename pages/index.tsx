@@ -10,7 +10,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import * as Label from '@radix-ui/react-label';
-import ScrappedSite from "./scrappedSite";
+import ScrappedSite from "../components/scrappedSite";
 import urlExist from "url-exist"
 
 let socket: any;
@@ -123,11 +123,11 @@ export default function Home() {
         
         {/* <ul className="list-disc hover:list-inside divide-y divide-dashed"> */}
           {/* <AnimatePresence> */}
-            {pTags.map(function (para: any) {
+            {pTags.map(function (idx: number, para: any) {
               const contents = {link: para.link, data: para.data}; 
               return (
                 
-                  <ScrappedSite key={para.link} contents={contents} /> 
+                  <ScrappedSite contents={contents} key={idx}/> 
                 
               )
               })
